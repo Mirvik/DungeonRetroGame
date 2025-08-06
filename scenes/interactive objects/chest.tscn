@@ -1,0 +1,102 @@
+[gd_scene load_steps=12 format=3 uid="uid://dgxv2nqmasr0p"]
+
+[ext_resource type="Script" uid="uid://dyis3rwmlsxcn" path="res://scripts/сhest.gd" id="1_ggv58"]
+[ext_resource type="Texture2D" uid="uid://ckj60isuvaxn1" path="res://art/interactive_objects/RPG Chests.png" id="2_6un1a"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j5jx5"]
+radius = 2.1
+height = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lpvoh"]
+atlas = ExtResource("2_6un1a")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_at5dv"]
+atlas = ExtResource("2_6un1a")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jcd4p"]
+atlas = ExtResource("2_6un1a")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uacia"]
+atlas = ExtResource("2_6un1a")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yk7ts"]
+atlas = ExtResource("2_6un1a")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajshl"]
+atlas = ExtResource("2_6un1a")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ghpyy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lpvoh")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at5dv")
+}],
+"loop": true,
+"name": &"opened",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jcd4p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uacia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yk7ts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajshl")
+}],
+"loop": false,
+"name": &"opening",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_44saj"]
+size = Vector2(7.25666, 4.6759)
+
+[node name="Chest" type="Node2D"]
+script = ExtResource("1_ggv58")
+
+[node name="InteractArea" type="Area2D" parent="."]
+position = Vector2(-137, -90)
+monitorable = false
+
+[node name="DetectBody" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2(1, -2)
+scale = Vector2(-4.22685, 0.868527)
+shape = SubResource("CapsuleShape2D_j5jx5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-136, -97)
+sprite_frames = SubResource("SpriteFrames_ghpyy")
+animation = &"closed"
+autoplay = "closed"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-136, -108.5)
+scale = Vector2(2.48048, 2.35249)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 3.82573)
+shape = SubResource("RectangleShape2D_44saj")
+
+[connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="InteractArea" to="." method="_on_interact_area_body_exited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
