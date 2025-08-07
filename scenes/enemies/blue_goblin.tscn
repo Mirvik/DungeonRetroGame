@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://blb0h21t125km"]
+
+[ext_resource type="Script" uid="uid://m388wmm3gn48" path="res://scripts/enemies/blue_goblin.gd" id="1_7cq0s"]
+[ext_resource type="Texture2D" uid="uid://c2nitm1xnpr6a" path="res://art/enemies/enemies.png" id="1_e446v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rlkcr"]
+atlas = ExtResource("1_e446v")
+region = Rect2(52, 27, 25, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cq0s"]
+atlas = ExtResource("1_e446v")
+region = Rect2(2, 27, 25, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ayxe"]
+atlas = ExtResource("1_e446v")
+region = Rect2(27, 27, 25, 27)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7cq0s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rlkcr")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cq0s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ayxe")
+}],
+"loop": true,
+"name": &"run",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_us37r"]
+size = Vector2(9, 12.75)
+
+[node name="BlueGoblin" type="CharacterBody2D" groups=["enemies"]]
+z_index = 1
+y_sort_enabled = true
+scale = Vector2(2, 2)
+collision_layer = 4
+script = ExtResource("1_7cq0s")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7cq0s")
+animation = &"run"
+frame = 1
+frame_progress = 0.229205
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_us37r")
+
+[node name="RandomTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="StunTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="RandomTimer" to="." method="_on_random_timer_timeout"]
+[connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
