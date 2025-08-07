@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var hud := $"../UI/HUD"
 @onready var anim := $AnimatedSprite2D
+@onready var animP := $AnimationPlayer
 @onready var invulnerability_timer := $invulnerability_timer
 
 var inventory = {
@@ -9,13 +10,6 @@ var inventory = {
 	"coin": 0,
 	"bomb": 0
 }
-
-var max_hearts: int = 6
-var current_hearts: int = 6
-
-@export var speed: int = 300
-var last_direction: String = "down"
-var nearby_interactive_object
 
 enum PlayerState {
 	IDLE,
@@ -30,14 +24,25 @@ enum PlayerState {
 
 var state: PlayerState = PlayerState.IDLE
 
+var max_hearts: int = 6
+var current_hearts: int = 6
+
+var force: int = 100
+var speed: int = 300
+var last_direction: String = "down"
+var nearby_interactive_object
+
 var is_input_disabled: bool = false
 var is_invulnerable: bool = false
+
 
 var bow_unlocked: bool = false
 var bombs_unlocked: bool = false
 
+var num_health_upgrades: int = 0
+
 func _ready() -> void:
-	hud.update_health_bar(current_hearts)
+	hud.update_player_health_bar(current_hearts, max_hearts)
 	hud.update_collectable_counts(inventory)
 	
 func can_accept_input() -> bool:
@@ -45,12 +50,35 @@ func can_accept_input() -> bool:
 
 func _physics_process(delta: float) -> void:
 	
+
 	if can_accept_input():
 		get_input()
 		move_and_slide()
 	else:
 		velocity = Vector2.ZERO
 		move_and_slide()
+		
+func _input(event: InputEvent) -> void:
+	
+	# If is capable
+	if not can_accept_input():
+		return
+		
+	if Input.is_action_pressed("attack"):
+		state = PlayerState.ATTACKING
+		velocity = Vector2.ZERO
+		animP.play("attack_" + last_direction)
+		
+	if Input.is_action_pressed("interact") and nearby_interactive_object != null:
+		state = PlayerState.INTERACTING
+		velocity = Vector2.ZERO
+		anim.play("interact_" + last_direction)
+		
+	if Input.is_action_pressed("take_damage"):
+		#take_damage(1)
+		
+		if can_receive_health_upgrade():
+			get_health_upgrade()
 
 func get_input():
 	#Movement
@@ -81,24 +109,6 @@ func get_input():
 		anim.play("idle_" + last_direction)
 		state = PlayerState.IDLE
 
-func _input(event: InputEvent) -> void:
-	
-	# If is capable
-	if not can_accept_input():
-		return
-		
-	if event.is_action_pressed("attack"):
-		state = PlayerState.ATTACKING
-		velocity = Vector2.ZERO
-		anim.play("attack_" + last_direction)
-		
-	if Input.is_action_pressed("interact") and nearby_interactive_object != null:
-		state = PlayerState.INTERACTING
-		velocity = Vector2.ZERO
-		anim.play("interact_" + last_direction)
-		
-	if Input.is_action_pressed("take_damage"):
-		take_damage(1)
 		
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if "attack" in anim.animation:
@@ -119,7 +129,7 @@ func freeze_player() -> void:
 	state = PlayerState.FROZEN
 	velocity = Vector2.ZERO
 	anim.play("idle_" + last_direction)
-	
+
 func unfreeze_player() -> void:
 	state = PlayerState.IDLE
 
@@ -131,7 +141,7 @@ func take_damage(amount: int) -> void:
 		
 	#take damage
 	current_hearts = max(current_hearts - amount, 0)
-	hud.update_health_bar(current_hearts)
+	hud.update_player_health_bar(current_hearts, max_hearts)
 	velocity = Vector2.ZERO
 	
 	# Death
@@ -178,6 +188,20 @@ func collect_collectable(item: String, amount: int = 1) -> void:
 	velocity = Vector2.ZERO
 	anim.play("get_item")
 
+func can_receive_health_upgrade() -> bool:
+	return num_health_upgrades < 2
+
+func get_health_upgrade() -> void:
+	num_health_upgrades += 1
+	max_hearts += 2
+	hud.expand_player_health_bar(num_health_upgrades)
+	hud.update_player_health_bar(current_hearts, max_hearts)
+	
+	heal_to_max()
+
+func heal_to_max() -> void:
+	current_hearts = max_hearts
+	hud.update_player_health_bar(current_hearts, max_hearts)
 
 func unlock_bow() -> void:
 	bow_unlocked = true
@@ -187,3 +211,10 @@ func unlock_bow() -> void:
 func unlock_bombs() -> void:
 	bombs_unlocked = true
 	hud.show_weapon_icon("bomb")
+
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemies"):
+		body.take_damage(1)
+		body.apply_knockback(position, force)
+		

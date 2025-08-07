@@ -5,7 +5,7 @@ var is_interactive: bool = true
 
 
 func _on_interact_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player") and is_interactive:
+	if body.is_in_group("player"):
 		body.nearby_interactive_object = self
 
 
