@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://dbtk3lc7tt2f0"]
+
+[ext_resource type="Script" uid="uid://8i62u3j0f5ey" path="res://scripts/dungeon.gd" id="1_fpimf"]
+[ext_resource type="PackedScene" uid="uid://uqr6hv6ijjyo" path="res://prefabs/ui/hud.tscn" id="2_0wj4k"]
+[ext_resource type="PackedScene" uid="uid://cb5kawkrkxx1g" path="res://prefabs/characters/player.tscn" id="3_fvacq"]
+[ext_resource type="AudioStream" uid="uid://dhurdeafpy01o" path="res://music/Dungeon Scary.wav" id="4_0wj4k"]
+
+[sub_resource type="Gradient" id="Gradient_fpimf"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0wj4k"]
+gradient = SubResource("Gradient_fpimf")
+
+[node name="Dungeon" type="Node2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_fpimf")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("2_0wj4k")]
+
+[node name="Player" parent="." instance=ExtResource("3_fvacq")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -20)
+
+[node name="DeathFade" type="Sprite2D" parent="."]
+z_index = 2
+scale = Vector2(10.5313, 8.20313)
+texture = SubResource("GradientTexture2D_0wj4k")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_0wj4k")
+autoplay = true
+
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]

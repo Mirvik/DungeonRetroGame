@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://dujql8gcex03j"]
+
+[ext_resource type="Script" uid="uid://drqqt2m4txytg" path="res://scripts/room_elements/room_contents/chest_with_health_upgrade.gd" id="1_pgkyk"]
+[ext_resource type="Texture2D" uid="uid://ex7ua7kaqh3b" path="res://art/room_elements/room_contents/Chest.png" id="2_xufvf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ggv58"]
+size = Vector2(2.88422, 11.287)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x74cv"]
+atlas = ExtResource("2_xufvf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcuox"]
+atlas = ExtResource("2_xufvf")
+region = Rect2(24, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ghpyy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x74cv")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcuox")
+}],
+"loop": true,
+"name": &"opened",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pgkyk"]
+size = Vector2(5.64407, 4.12221)
+
+[node name="ChestWithHealthUpgrade" type="Node2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_pgkyk")
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="DetectBody" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2(-2.89898e-06, 1.3565)
+rotation = -3.14159
+scale = Vector2(4.854, -1)
+shape = SubResource("RectangleShape2D_ggv58")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ghpyy")
+animation = &"closed"
+autoplay = "closed"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+scale = Vector2(2.48048, 2.35249)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 0.264714)
+scale = Vector2(1, 0.540912)
+shape = SubResource("RectangleShape2D_pgkyk")
+
+[connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="InteractArea" to="." method="_on_interact_area_body_exited"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dk5iorf4880xs"]
+
+[ext_resource type="Script" uid="uid://dqqrb4xiymgam" path="res://scripts/pickup_items/pickup_health_upgrade.gd" id="1_wkes6"]
+[ext_resource type="Texture2D" uid="uid://br3ba78o4pamj" path="res://art/pickups/HealthUpgrade.png" id="2_5esuh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5esuh"]
+
+[node name="PickupHealthUpgrade" type="Node2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_wkes6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5esuh")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_5esuh")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

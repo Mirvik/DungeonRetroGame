@@ -42,6 +42,8 @@ func expand_player_health_bar(num_health_updates: int) -> void:
 		$HBox/HealthBars/PlayerBarContainer/HealthBar.texture = player_bar_2_texture
 	elif num_health_updates == 2:
 		$HBox/HealthBars/PlayerBarContainer/HealthBar.texture = player_bar_3_texture
+	else:
+		return
 	
 	player_bar_extensibility_level = num_health_updates
 
@@ -83,7 +85,7 @@ func update_player_health_bar(current_hearts: int, max_hearts: int) -> void:
 		
 		hearts -= 2
 
-func update_collectable_counts(inventory: Dictionary) -> void:
+func update_collectible_counts(inventory: Dictionary) -> void:
 	get_node("HBox/CollectableCounts/KeyAmount").text = str(inventory["key"])
 	get_node("HBox/CollectableCounts/CoinAmount").text = str(inventory["coin"])
 	get_node("HBox/CollectableCounts/BombAmount").text = str(inventory["bomb"])

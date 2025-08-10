@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://cirb5y4vo5e5j"]
+
+[ext_resource type="Texture2D" uid="uid://byarex507604x" path="res://art/room_elements/room_contents/Pot.png" id="1_fstvs"]
+[ext_resource type="Script" uid="uid://dwkrkqhvhu7k3" path="res://scripts/room_elements/room_contents/pot.gd" id="1_rfb2a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rfb2a"]
+atlas = ExtResource("1_fstvs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sgd0w"]
+atlas = ExtResource("1_fstvs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bw82e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rfb2a")
+}],
+"loop": true,
+"name": &"broken",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sgd0w")
+}],
+"loop": true,
+"name": &"intact",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rfb2a"]
+size = Vector2(11, 9.6)
+
+[node name="Area2D" type="Area2D" groups=["breakable_objects"]]
+z_index = 1
+y_sort_enabled = true
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_rfb2a")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bw82e")
+animation = &"intact"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 3.2)
+shape = SubResource("RectangleShape2D_rfb2a")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0.5, 3.2)
+scale = Vector2(1, 0.560001)
+shape = SubResource("RectangleShape2D_rfb2a")

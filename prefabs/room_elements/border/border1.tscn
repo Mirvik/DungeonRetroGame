@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://itddr5r6n8kt"]
+
+[ext_resource type="Texture2D" uid="uid://qyn0bejegeyl" path="res://art/room_elements/border/Border.png" id="1_jb0k1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jb0k1"]
+size = Vector2(40, 64)
+
+[node name="Border1" type="StaticBody2D"]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jb0k1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-108, 56)
+shape = SubResource("RectangleShape2D_jb0k1")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-108, -56)
+shape = SubResource("RectangleShape2D_jb0k1")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(108, 56)
+shape = SubResource("RectangleShape2D_jb0k1")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(108, -56)
+shape = SubResource("RectangleShape2D_jb0k1")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="."]
+position = Vector2(65, -68)
+rotation = 1.5708
+scale = Vector2(1, 1.28)
+shape = SubResource("RectangleShape2D_jb0k1")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="."]
+position = Vector2(-65, -68)
+rotation = 1.5708
+scale = Vector2(1, 1.28)
+shape = SubResource("RectangleShape2D_jb0k1")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="."]
+position = Vector2(-65, 68)
+rotation = 1.5708
+scale = Vector2(1, 1.28)
+shape = SubResource("RectangleShape2D_jb0k1")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="."]
+position = Vector2(65, 68)
+rotation = 1.5708
+scale = Vector2(1, 1.28)
+shape = SubResource("RectangleShape2D_jb0k1")

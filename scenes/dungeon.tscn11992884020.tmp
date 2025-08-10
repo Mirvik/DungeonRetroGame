@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbtk3lc7tt2f0"]
+
+[ext_resource type="Script" uid="uid://8i62u3j0f5ey" path="res://scripts/dungeon.gd" id="1_fpimf"]
+[ext_resource type="PackedScene" uid="uid://uqr6hv6ijjyo" path="res://prefabs/ui/hud.tscn" id="2_0wj4k"]
+[ext_resource type="PackedScene" uid="uid://cb5kawkrkxx1g" path="res://prefabs/characters/player.tscn" id="3_fvacq"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vqwjj"]
+load_path = "res://.godot/imported/Border.png-f925e74435ae0c504376e092a8b2ccc5.ctex"
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_fpimf")
+
+[node name="Border" type="Sprite2D" parent="."]
+scale = Vector2(2.5, 2.5)
+texture = SubResource("CompressedTexture2D_vqwjj")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("2_0wj4k")]
+
+[node name="Player" parent="." instance=ExtResource("3_fvacq")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -20)

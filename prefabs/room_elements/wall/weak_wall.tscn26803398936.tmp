@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://cu5fybywa6his"]
+
+[ext_resource type="Texture2D" uid="uid://bggn0a8etcwbv" path="res://art/room_elements/WeakWall.png" id="1_3pyto"]
+[ext_resource type="Script" uid="uid://r41vuor3ml3l" path="res://scripts/room_elements/wall/weak_wall.gd" id="1_3tx3y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tx3y"]
+atlas = ExtResource("1_3pyto")
+region = Rect2(64, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgn48"]
+atlas = ExtResource("1_3pyto")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0hcbj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3tx3y")
+}],
+"loop": true,
+"name": &"cracked",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgn48")
+}],
+"loop": true,
+"name": &"solid",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0hcbj"]
+size = Vector2(24, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3tx3y"]
+size = Vector2(13.5, 31.9375)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bgn48"]
+size = Vector2(20, 11)
+
+[node name="WeakWall" type="StaticBody2D" groups=["weak_wall"]]
+z_index = 1
+y_sort_enabled = true
+scale = Vector2(2, 2)
+script = ExtResource("1_3tx3y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0hcbj")
+animation = &"solid"
+
+[node name="EnterBlocker" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_0hcbj")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-16.75, -0.0625)
+scale = Vector2(1.1, 1)
+shape = SubResource("RectangleShape2D_3tx3y")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(16.75, -0.0625)
+scale = Vector2(1.1, 1)
+shape = SubResource("RectangleShape2D_3tx3y")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+scale = Vector2(2.24, 0.5)
+shape = SubResource("RectangleShape2D_3tx3y")
+
+[node name="NextRoomTrigger" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextRoomTrigger"]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_bgn48")
+
+[connection signal="body_entered" from="NextRoomTrigger" to="." method="_on_next_room_trigger_body_entered"]

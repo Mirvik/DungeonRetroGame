@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://bhk2gki731w5b"]
+
+[ext_resource type="Texture2D" uid="uid://c2nitm1xnpr6a" path="res://art/enemies/enemies.png" id="1_3s1d4"]
+[ext_resource type="Script" uid="uid://peqahgr2mm7n" path="res://scripts/enemies/goblin.gd" id="1_qi87u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qi87u"]
+atlas = ExtResource("1_3s1d4")
+region = Rect2(51, 0, 24, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xnqyj"]
+atlas = ExtResource("1_3s1d4")
+region = Rect2(2, 0, 25, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adf3i"]
+atlas = ExtResource("1_3s1d4")
+region = Rect2(27, 0, 25, 27)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vri2t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qi87u")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xnqyj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adf3i")
+}],
+"loop": true,
+"name": &"run",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_us37r"]
+size = Vector2(9, 12.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gk6j"]
+size = Vector2(9, 12.75)
+
+[node name="Goblin" type="CharacterBody2D" groups=["enemies"]]
+z_index = 1
+y_sort_enabled = true
+collision_layer = 4
+script = ExtResource("1_qi87u")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vri2t")
+animation = &"run"
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." groups=["enemies"]]
+position = Vector2(1, 4)
+shape = SubResource("RectangleShape2D_us37r")
+
+[node name="RandomTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="ContactArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactArea"]
+position = Vector2(1, 4)
+shape = SubResource("RectangleShape2D_4gk6j")
+
+[connection signal="timeout" from="RandomTimer" to="." method="_on_random_timer_timeout"]
+[connection signal="body_entered" from="ContactArea" to="." method="_on_contact_area_body_entered"]

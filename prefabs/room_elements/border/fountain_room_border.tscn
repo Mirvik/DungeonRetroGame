@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://btmcjfbqcqy1g"]
+
+[ext_resource type="Texture2D" uid="uid://dshve13102b4" path="res://art/room_elements/border/FontainRoomBorder.png" id="1_13dpn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5f2r"]
+size = Vector2(40, 64)
+
+[node name="FountainRoomBorder" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_13dpn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-108, 56)
+shape = SubResource("RectangleShape2D_p5f2r")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-108, -56)
+shape = SubResource("RectangleShape2D_p5f2r")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(108, 56)
+shape = SubResource("RectangleShape2D_p5f2r")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(108, -56)
+shape = SubResource("RectangleShape2D_p5f2r")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="."]
+position = Vector2(65, -68)
+rotation = 1.5708
+scale = Vector2(1, 1.28)
+shape = SubResource("RectangleShape2D_p5f2r")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="."]
+position = Vector2(-65, -68)
+rotation = 1.5708
+scale = Vector2(1, 1.28)
+shape = SubResource("RectangleShape2D_p5f2r")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="."]
+position = Vector2(-65, 68)
+rotation = 1.5708
+scale = Vector2(1, 1.28)
+shape = SubResource("RectangleShape2D_p5f2r")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="."]
+position = Vector2(65, 68)
+rotation = 1.5708
+scale = Vector2(1, 1.28)
+shape = SubResource("RectangleShape2D_p5f2r")

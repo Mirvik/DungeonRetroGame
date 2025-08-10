@@ -1,0 +1,176 @@
+[gd_scene load_steps=14 format=3 uid="uid://nepxagp8lnof"]
+
+[ext_resource type="Script" uid="uid://82w6ht4n32jp" path="res://scripts/title_screen.gd" id="1_dc4i4"]
+[ext_resource type="Texture2D" uid="uid://bfcthqwng2nw" path="res://art/scenes/title_screen/StartButton.png" id="1_sa3yf"]
+[ext_resource type="Texture2D" uid="uid://cslhige1761vh" path="res://art/scenes/title_screen/Background.png" id="2_s4lrb"]
+[ext_resource type="FontFile" uid="uid://b31ts3gpagapv" path="res://fonts/FONT.png" id="3_mgrm8"]
+[ext_resource type="Texture2D" uid="uid://rh77ptlyr3dr" path="res://art/scenes/title_screen/Logo.png" id="4_mgrm8"]
+[ext_resource type="AudioStream" uid="uid://dpe3iypuiks1x" path="res://music/MainMenu.wav" id="6_e54dn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dc4i4"]
+atlas = ExtResource("1_sa3yf")
+region = Rect2(60, 0, 4, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgrm8"]
+atlas = ExtResource("1_sa3yf")
+region = Rect2(0, 0, 64, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e54dn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dc4i4")
+}],
+"loop": true,
+"name": &"off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgrm8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dc4i4")
+}],
+"loop": true,
+"name": &"press_any_key",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgrm8")
+}],
+"loop": false,
+"name": &"pressed",
+"speed": 4.0
+}]
+
+[sub_resource type="Animation" id="Animation_e54dn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Logo:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-203, -80)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Text:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-201.5, -157)]
+}
+
+[sub_resource type="Animation" id="Animation_dc4i4"]
+resource_name = "logo_animation"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Logo:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.03333, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-750, -100), Vector2(-200, -100)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Text:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.03333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-200, -400), Vector2(-201.5, -157)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3yumr"]
+_data = {
+&"RESET": SubResource("Animation_e54dn"),
+&"logo_animation": SubResource("Animation_dc4i4")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_dc4i4"]
+font = ExtResource("3_mgrm8")
+font_size = 24
+
+[node name="TitleScreen" type="Node2D"]
+script = ExtResource("1_dc4i4")
+
+[node name="StartButton" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(0, 149)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_e54dn")
+animation = &"off"
+autoplay = "off"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3yumr")
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -321.5
+offset_top = -243.0
+offset_right = 321.5
+offset_bottom = 243.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_s4lrb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Text" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -201.5
+offset_top = -157.0
+offset_right = 223.5
+offset_bottom = -132.0
+grow_horizontal = 2
+text = "THE CASTLE OF THE"
+label_settings = SubResource("LabelSettings_dc4i4")
+
+[node name="Logo" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.0
+offset_top = -80.0
+offset_right = 203.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_mgrm8")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_e54dn")
+autoplay = true
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]

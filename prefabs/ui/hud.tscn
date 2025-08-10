@@ -1,0 +1,227 @@
+[gd_scene load_steps=17 format=3 uid="uid://uqr6hv6ijjyo"]
+
+[ext_resource type="Script" uid="uid://c0jh8leqmsd1j" path="res://scripts/hud.gd" id="1_mj13f"]
+[ext_resource type="Texture2D" uid="uid://bm5kw6rgpcuoe" path="res://art/ui/ZIcon.png" id="2_0h1do"]
+[ext_resource type="Texture2D" uid="uid://lfq7ve2vkfoh" path="res://art/ui/XIcon1.png" id="3_4d46k"]
+[ext_resource type="Texture2D" uid="uid://cci1mywha1fkq" path="res://art/ui/CIcon1.png" id="4_erw67"]
+[ext_resource type="Texture2D" uid="uid://bytxrw0rqrsts" path="res://art/ui/BossBar.png" id="5_gonto"]
+[ext_resource type="Texture2D" uid="uid://cae8nuq8ili2t" path="res://art/ui/BossHeart.png" id="6_0h1do"]
+[ext_resource type="Texture2D" uid="uid://dewn7fvc8fceb" path="res://art/ui/PlayerBar1.png" id="6_cwdlq"]
+[ext_resource type="Texture2D" uid="uid://dtlbxwitmhf65" path="res://art/ui/PlayerHeart.png" id="7_o6xly"]
+[ext_resource type="Texture2D" uid="uid://cu3o5rynx2otx" path="res://art/ui/KEY.png" id="8_we3sy"]
+[ext_resource type="Texture2D" uid="uid://r56waor3ivdv" path="res://art/ui/Coin.png" id="9_65nxt"]
+[ext_resource type="Texture2D" uid="uid://bsnyvumft00bj" path="res://art/ui/Bomb.png" id="10_el1dq"]
+[ext_resource type="FontFile" uid="uid://b31ts3gpagapv" path="res://fonts/FONT.png" id="11_gmc6u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_at5dv"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ghpyy"]
+font = ExtResource("11_gmc6u")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_yk7ts"]
+font = ExtResource("11_gmc6u")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_ajshl"]
+font = ExtResource("11_gmc6u")
+font_size = 8
+
+[node name="HUD" type="Panel"]
+z_index = 5
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 74.0
+grow_horizontal = 2
+scale = Vector2(1.01362, 0.940478)
+theme_override_styles/panel = SubResource("StyleBoxFlat_at5dv")
+script = ExtResource("1_mj13f")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+z_index = 10
+layout_mode = 1
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 319.0
+offset_bottom = 37.0
+scale = Vector2(1.98657, 1.97823)
+alignment = 1
+
+[node name="WeaponSlots" type="HBoxContainer" parent="HBox"]
+layout_mode = 2
+
+[node name="AttackSlot" type="TextureRect" parent="HBox/WeaponSlots"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("2_0h1do")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="BowSlot" type="TextureRect" parent="HBox/WeaponSlots"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_4d46k")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="BombSlot" type="TextureRect" parent="HBox/WeaponSlots"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_erw67")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="HealthBars" type="VBoxContainer" parent="HBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="BossBarContainer" type="HBoxContainer" parent="HBox/HealthBars"]
+layout_mode = 2
+
+[node name="HealthBar" type="TextureRect" parent="HBox/HealthBars/BossBarContainer"]
+layout_mode = 2
+texture = ExtResource("5_gonto")
+
+[node name="heart_1" type="TextureRect" parent="HBox/HealthBars/BossBarContainer/HealthBar"]
+visible = false
+layout_mode = 0
+offset_left = 48.1093
+offset_top = -0.486072
+offset_right = 56.1093
+offset_bottom = 7.51393
+texture = ExtResource("6_0h1do")
+
+[node name="heart_2" type="TextureRect" parent="HBox/HealthBars/BossBarContainer/HealthBar"]
+visible = false
+layout_mode = 0
+offset_left = 56.0552
+offset_top = 0.051423
+offset_right = 64.0552
+offset_bottom = 8.05142
+texture = ExtResource("6_0h1do")
+
+[node name="heart_3" type="TextureRect" parent="HBox/HealthBars/BossBarContainer/HealthBar"]
+visible = false
+layout_mode = 0
+offset_left = 64.4977
+offset_top = 0.051423
+offset_right = 72.4977
+offset_bottom = 8.05142
+texture = ExtResource("6_0h1do")
+
+[node name="heart_4" type="TextureRect" parent="HBox/HealthBars/BossBarContainer/HealthBar"]
+visible = false
+layout_mode = 0
+offset_left = 72.4435
+offset_top = 0.051423
+offset_right = 80.4435
+offset_bottom = 8.05142
+texture = ExtResource("6_0h1do")
+
+[node name="heart_5" type="TextureRect" parent="HBox/HealthBars/BossBarContainer/HealthBar"]
+visible = false
+layout_mode = 0
+offset_left = 80.3894
+offset_top = 0.051423
+offset_right = 88.3894
+offset_bottom = 8.05142
+texture = ExtResource("6_0h1do")
+
+[node name="heart_6" type="TextureRect" parent="HBox/HealthBars/BossBarContainer/HealthBar"]
+visible = false
+layout_mode = 0
+offset_left = 88.3352
+offset_top = 0.051423
+offset_right = 96.3352
+offset_bottom = 8.05142
+texture = ExtResource("6_0h1do")
+
+[node name="PlayerBarContainer" type="HBoxContainer" parent="HBox/HealthBars"]
+layout_mode = 2
+
+[node name="HealthBar" type="TextureRect" parent="HBox/HealthBars/PlayerBarContainer"]
+layout_mode = 2
+texture = ExtResource("6_cwdlq")
+
+[node name="heart_1" type="TextureRect" parent="HBox/HealthBars/PlayerBarContainer/HealthBar"]
+layout_mode = 2
+offset_left = 56.3519
+offset_right = 64.3519
+offset_bottom = 8.0
+texture = ExtResource("7_o6xly")
+
+[node name="heart_2" type="TextureRect" parent="HBox/HealthBars/PlayerBarContainer/HealthBar"]
+layout_mode = 2
+offset_left = 64.2978
+offset_right = 72.2978
+offset_bottom = 8.0
+texture = ExtResource("7_o6xly")
+
+[node name="heart_3" type="TextureRect" parent="HBox/HealthBars/PlayerBarContainer/HealthBar"]
+layout_mode = 2
+offset_left = 71.747
+offset_right = 79.747
+offset_bottom = 8.0
+texture = ExtResource("7_o6xly")
+
+[node name="heart_4" type="TextureRect" parent="HBox/HealthBars/PlayerBarContainer/HealthBar"]
+visible = false
+layout_mode = 2
+offset_left = 80.1895
+offset_right = 88.1895
+offset_bottom = 8.0
+texture = ExtResource("7_o6xly")
+
+[node name="heart_5" type="TextureRect" parent="HBox/HealthBars/PlayerBarContainer/HealthBar"]
+visible = false
+layout_mode = 2
+offset_left = 87.6387
+offset_right = 95.6387
+offset_bottom = 8.0
+texture = ExtResource("7_o6xly")
+
+[node name="CollectableIconsContainer" type="VBoxContainer" parent="HBox"]
+z_index = 10
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+alignment = 1
+
+[node name="KeyIcon" type="TextureRect" parent="HBox/CollectableIconsContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("8_we3sy")
+stretch_mode = 3
+
+[node name="CoinIcon" type="TextureRect" parent="HBox/CollectableIconsContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("9_65nxt")
+stretch_mode = 3
+
+[node name="BombIcon" type="TextureRect" parent="HBox/CollectableIconsContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("10_el1dq")
+stretch_mode = 3
+
+[node name="CollectableCounts" type="VBoxContainer" parent="HBox"]
+z_index = 10
+layout_mode = 2
+alignment = 1
+
+[node name="KeyAmount" type="Label" parent="HBox/CollectableCounts"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_ghpyy")
+
+[node name="CoinAmount" type="Label" parent="HBox/CollectableCounts"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_yk7ts")
+
+[node name="BombAmount" type="Label" parent="HBox/CollectableCounts"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_ajshl")
